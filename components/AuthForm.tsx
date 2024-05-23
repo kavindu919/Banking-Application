@@ -21,6 +21,7 @@ import { authFormSchema } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { getLoggedInUser, signIn, signUp } from "@/lib/actions/user.action";
+import PlaidLink from "./PlaidLink";
 
 const AuthForm = ({ type }: { type: string }) => {
   const router = useRouter();
@@ -50,7 +51,19 @@ const AuthForm = ({ type }: { type: string }) => {
 
       //cheak sign in or up
       if (type === "sign-up") {
-        const newUser = await signUp(data);
+        const userData = {
+          firstName: data.firstName!,
+          lastName: data.lastName!,
+          address1: data.address1!,
+          city: data.city!,
+          state: data.state!,
+          postalCode: data.postalCode!,
+          dateOfBirth: data.dateOfBirth!,
+          ssn: data.ssn!,
+          email: data.email,
+          password: data.password,
+        };
+        const newUser = await signUp(userData);
         setUser(newUser);
       }
       if (type === "sign-in") {
@@ -88,7 +101,9 @@ const AuthForm = ({ type }: { type: string }) => {
       </header>
       {/* cheak the accsess for the user */}
       {user ? (
-        <div className=" flex flex-col gap-4">{/* paid link */}</div>
+        <div className=" flex flex-col gap-4">
+          <PlaidLink user={user} variant="primary" />
+        </div>
       ) : (
         <>
           <Form {...form}>
@@ -163,26 +178,7 @@ const AuthForm = ({ type }: { type: string }) => {
                 label="Password"
                 placeholder="Enter Your Password"
               />
-              {/* <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <div className="form-item">
-                    <FormLabel className="form-label">Password</FormLabel>
-                    <div className=" flex w-full flex-col ">
-                      <FormControl>
-                        <Input
-                          placeholder="Enter Your Password"
-                          className="input-class"
-                          type="password"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage className="form-message mt-2" />
-                    </div>
-                  </div>
-                )}
-              /> */}
+
               <div className=" flex flex-col gap-4">
                 <Button type="submit" className="form-btn" disabled={isLoading}>
                   {isLoading ? (
