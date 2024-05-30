@@ -1,7 +1,7 @@
+export const dynamic = "force-dynamic";
 import type { Metadata } from "next";
 import { Inter, IBM_Plex_Serif } from "next/font/google";
 import "./globals.css";
-import { Variable } from "lucide-react";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 //make ibm font
