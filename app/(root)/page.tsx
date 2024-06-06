@@ -8,7 +8,7 @@ import { getLoggedInUser } from "@/lib/actions/user.action";
 
 const Home = async ({ searchParams: { id, page } }: SearchParamProps) => {
   const currentPage = Number(page as string) || 1;
-
+  //
   const loggedIn = await getLoggedInUser();
   //get all the user account user have
   const accounts = await getAccounts({
